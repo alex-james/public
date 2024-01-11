@@ -1,0 +1,122 @@
+/* Components */
+.action {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: darkorange;
+    border: navajowhite;
+    border-radius: 5px;
+    color: white;
+}
+.action:hover {
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
+}
+
+/* Header */
+.header-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Mooli";
+}
+
+/* Coverflow */
+.ui-coverflow-wrapper{
+    height:400px;
+    margin-top: 20px;
+}
+.ui-state-active{
+    border:0px;
+}
+
+/* New Album */
+#album-covers-table .album {
+    width: 200px;
+}
+#album-covers-table .album .album-info {
+    display: block;
+}
+#album-covers-table .album .album-info .purchase-date {
+    border: darkorange 1px solid;
+    padding: 1px 1px 1px 5px;
+    border-radius: 2px;
+}
+#album-covers-table .album .album-info .album-genre-select {
+    display: block;
+    width: 90%;
+    margin-top: 5px;
+    border-color: darkorange;
+}
+#album-covers-table .album .purchase-date {
+    padding: 5px;
+    width: 75px;
+    border: none;
+}
+#album-covers-table .covers {
+    width: calc(100% - 400px);
+    position: relative;
+}
+#album-covers-table .covers .nav {
+    position: absolute;
+    top: 63px;
+    z-index: 1;
+    font-size: 24px;
+    transition: box-shadow .3s;
+}
+#album-covers-table .covers .nav:hover {
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+#album-covers-table .covers .nav.nav-prev {
+    left: -30px;
+}
+#album-covers-table .covers .nav.nav-next {
+    right: 20px;
+}
+#album-covers-table .covers .cover-options {
+    width: calc((100% - 20px) / 5);
+    display: inline-block;
+}
+#album-covers-table .covers .cover-options .album-info {
+    width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#album-covers-table input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+}
+
+.album-image, #album-covers-table input:active +.album-image{opacity: .9;}
+.album-image, #album-covers-table input:checked +.album-image{
+    -webkit-filter: none;
+    -moz-filter: none;
+    filter: none;
+}
+.album-image{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    min-height:150px;
+    width: 100%;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+    -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+    filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.album-image:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
