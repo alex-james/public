@@ -1,3 +1,32 @@
+/* Layout */
+.col-6 {
+    width: 50%;
+    display: inline-block;
+    float: left;
+}
+
+/* Background */
+body {
+    overflow: hidden;
+}
+#content {
+    width: 1920px;
+    max-width: 1920px;
+    height: 1200px;
+    max-height: 1200px;
+    background-color: #000
+}
+#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    max-width: 1920px;
+    max-height: 1200px;
+    display: block;
+    object-fit: cover;
+    background-color: #000000;
+}
+
 /* Components */
 .action {
     padding: 10px;
@@ -13,6 +42,17 @@
     box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 }
 
+.main-nav {
+    width: 60%;
+    padding: 40px;
+    text-align: center;
+    display: inline-block;
+    margin: 20px 10% 20px 10%;
+    text-decoration: none;
+    font-size: 28px;
+    font-family: "Mooli", sans-serif;
+}
+
 /* Header */
 .header-text {
     display: flex;
@@ -20,19 +60,43 @@
     align-items: center;
     font-weight: 400;
     font-style: normal;
-    font-family: "Mooli";
+    font-family: "Mooli", sans-serif;
 }
 
 /* Coverflow */
 .ui-coverflow-wrapper{
-    height:400px;
+    position: absolute;
+    height:300px;
     margin-top: 20px;
+    width: 700px;
+    left: 640px;
+    top: 155px;
 }
 .ui-state-active{
-    border:0px;
+    border: 0;
 }
 
-/* New Album */
+/* Add */
+#add-album fieldset {
+    max-width: 1000px;
+    font-family: "Mooli", sans-serif;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+#add-album .album-info {
+    padding: 20px;
+}
+#add-album .album-info label {
+    width: 120px;
+    display: inline-block;
+}
+#add-album .album-info input {
+    width: 800px;
+    font-family: "Mooli", sans-serif;
+    font-size: 26px;
+}
+
+/* Covers */
 #album-covers-table .album {
     width: 200px;
 }
