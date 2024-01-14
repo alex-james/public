@@ -65,12 +65,12 @@ body {
 
 /* Coverflow */
 .ui-coverflow-wrapper{
-    position: absolute;
-    height:300px;
+    position: fixed;
+    height: 360px;
     margin-top: 20px;
-    width: 700px;
-    left: 640px;
-    top: 155px;
+    width: 950px;
+    left: 510px;
+    top: 145px;
 }
 .ui-state-active{
     border: 0;
