@@ -84,6 +84,7 @@ body {
 }
 .cover-button.active {
     box-shadow: 8px 10px 5px lightblue;
+    border-radius: 10px;
 }
 
 /* Sider */
