@@ -11,18 +11,18 @@ body {
     margin: 0;
 }
 #content {
-    width: 1435px;
-    max-width: 1435px;
-    height: 800px;
-    max-height: 800px;
+    width: 1450px;
+    max-width: 1450px;
+    height: 900px;
+    max-height: 900px;
     background-color: #000
 }
 #overlay {
     position: fixed;
     width: 100%;
     height: 100%;
-    max-width: 1435px;
-    max-height: 800px;
+    max-width: 1450px;
+    max-height: 900px;
     display: block;
     object-fit: cover;
     background-color: #000000;
@@ -66,11 +66,11 @@ body {
 
 /* Coverflow */
 .ui-coverflow-wrapper{
-    osition: fixed;
+    position: fixed;
     height: 270px;
     width: 730px;
-    left: 365px;
-    top: 60px;
+    left: 370px;
+    top: 110px;
 }
 .ui-state-active{
     border: 0;

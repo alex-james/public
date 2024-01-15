@@ -5,7 +5,7 @@ define(["jquery", "coverflow"], function($) {
 	const $genre = $header.find('.genre');
 
 	$('#coverflow').coverflow({
-		active: 2,
+		active: 4,
 		scale: 0.6,
 		select: function(event, ui){
 			$artist.text($(ui.active).attr("data-artist"));
