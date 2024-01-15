@@ -8,20 +8,21 @@
 /* Background */
 body {
     overflow: hidden;
+    margin: 0;
 }
 #content {
-    width: 1920px;
-    max-width: 1920px;
-    height: 1200px;
-    max-height: 1200px;
+    width: 1435px;
+    max-width: 1435px;
+    height: 800px;
+    max-height: 800px;
     background-color: #000
 }
 #overlay {
     position: fixed;
     width: 100%;
     height: 100%;
-    max-width: 1920px;
-    max-height: 1200px;
+    max-width: 1435px;
+    max-height: 800px;
     display: block;
     object-fit: cover;
     background-color: #000000;
@@ -65,15 +66,17 @@ body {
 
 /* Coverflow */
 .ui-coverflow-wrapper{
-    position: fixed;
-    height: 360px;
-    margin-top: 20px;
-    width: 950px;
-    left: 510px;
-    top: 145px;
+    osition: fixed;
+    height: 270px;
+    width: 730px;
+    left: 365px;
+    top: 60px;
 }
 .ui-state-active{
     border: 0;
+}
+#coverflow > img {
+    width: 300px;
 }
 
 /* Add */

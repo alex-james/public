@@ -4,25 +4,20 @@ define(["jquery", "coverflow"], function($) {
 	const $title = $header.find('.title');
 	const $genre = $header.find('.genre');
 
-	// $('#coverflow').coverflow({
-	// 	active: 2,
-	// 	select: function(event, ui){
-	// 		$artist.text($(ui.active).attr("data-artist"));
-	// 		$title.text($(ui.active).attr("data-title"));
-	// 		$genre.text($(ui.active).attr("data-genre"));
-	// 	}
-	// });
-	//
-	// $('#coverflow img').click(function() {
-	// 	if( ! $(this).hasClass('ui-state-active')){
-	// 		return;
-	// 	}
-	// 	$('#coverflow').coverflow('next');
-	// });
+	$('#coverflow').coverflow({
+		active: 2,
+		scale: 0.6,
+		select: function(event, ui){
+			$artist.text($(ui.active).attr("data-artist"));
+			$title.text($(ui.active).attr("data-title"));
+			$genre.text($(ui.active).attr("data-genre"));
+		}
+	});
 
-	$('#css').on('change', function() {
-		const css = $(this).val();
-		const coverflow = $('#coverflow');
-		coverflow.attr('style', css);
+	$('#coverflow img').click(function() {
+		if( ! $(this).hasClass('ui-state-active')){
+			return;
+		}
+		$('#coverflow').coverflow('next');
 	});
 });
