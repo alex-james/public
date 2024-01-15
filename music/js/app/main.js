@@ -17,17 +17,33 @@ define(["jquery", "coverflow"], function($) {
 			$title.text($activeAlbum.attr("data-title"));
 			$genre.text($activeAlbum.attr("data-genre"));
 			$releaseDate.text(releaseDate.toLocaleDateString('en-GB'));
+
+			$('#slider .slider-button').addClass('updating').val($activeAlbum.attr("data-album-num")).removeClass('updating');
 		}
 	});
 
 	$('#coverflow img').click(function() {
-		if( ! $(this).hasClass('ui-state-active')){
+		if(!$(this).hasClass('ui-state-active')){
 			return;
 		}
 		$('#coverflow').coverflow('next');
 	});
 
-	$('#slider .slider-button').on('input', function() {
+	$('.cover-button').on('click', function() {
+		const $button = $(this);
+
+		$('#actions .cover-button').removeClass('active');
+		$button.addClass('active');
+
+		if($button.hasClass('left')) {
+			$('.info-panel-wrapper').removeClass('show-back');
+		} else {
+			$('.info-panel-wrapper').addClass('show-back');
+		}
+
+	});
+
+	$('#slider .slider-button:not(.updating)').on('input', function() {
 		$('#coverflow img[data-album-num="' + $(this).val() + '"]').trigger('click');
 	});
 });
