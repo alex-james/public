@@ -122,8 +122,8 @@ body {
     grid-template-columns: 1fr 1rem 1fr 1rem 1fr;
     /*grid-gap: 1rem;*/
     width: 1310px;
-    height: 28px;
-    bottom: 50px;
+    height: 27px;
+    bottom: 53px;
     left: 75px;
 }
 .info-text {
