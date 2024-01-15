@@ -1,16 +1,22 @@
 define(["jquery", "coverflow"], function($) {
-	const $header = $('#header');
-	const $artist = $header.find('.artist');
-	const $title = $header.find('.title');
-	const $genre = $header.find('.genre');
+	const $infoBarTop = $('.info-bar.top');
+	const $infoBarBottom = $('.info-bar.bottom');
+	const $title = $infoBarTop.find('.title');
+	const $artist = $infoBarBottom.find('.artist');
+	const $genre = $infoBarBottom.find('.genre');
+	const $releaseDate = $infoBarBottom.find('.release-date');
 
 	$('#coverflow').coverflow({
 		active: 4,
 		scale: 0.6,
 		select: function(event, ui){
-			$artist.text($(ui.active).attr("data-artist"));
-			$title.text($(ui.active).attr("data-title"));
-			$genre.text($(ui.active).attr("data-genre"));
+			const $activeAlbum = $(ui.active);
+			const releaseDate = new Date($activeAlbum.attr("data-release-date"));
+
+			$artist.text($activeAlbum.attr("data-artist"));
+			$title.text($activeAlbum.attr("data-title"));
+			$genre.text($activeAlbum.attr("data-genre"));
+			$releaseDate.text(releaseDate.toLocaleDateString('en-GB'));
 		}
 	});
 
@@ -19,5 +25,9 @@ define(["jquery", "coverflow"], function($) {
 			return;
 		}
 		$('#coverflow').coverflow('next');
+	});
+
+	$('#slider .slider-button').on('input', function() {
+		$('#coverflow img[data-album-num="' + $(this).val() + '"]').trigger('click');
 	});
 });
