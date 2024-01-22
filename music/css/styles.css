@@ -9,10 +9,6 @@
 body {
     overflow: hidden;
     margin: 0;
-    width: 1450px;
-    max-width: 1450px;
-    height: 905px;
-    max-height: 905px;
 }
 #content {
     width: 1450px;
