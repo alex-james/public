@@ -8,8 +8,11 @@ define(["jquery", "coverflow"], function($) {
 	const $coverflow = $('#coverflow');
 
 	function buildCoverFlow() {
+		const numVisibleAlbums = $('#coverflow .album').length;
+		if(numVisibleAlbums === 0) return;
+
 		$coverflow.coverflow({
-			active: 4,
+			active: (Math.floor(numVisibleAlbums / 2)),
 			scale: 0.6,
 			select: function(event, ui){
 				const $activeAlbum = $(ui.active);
@@ -27,39 +30,73 @@ define(["jquery", "coverflow"], function($) {
 
 	function applyFiltersToCoverflow(rebuild = false)
 	{
-		if(rebuild) $coverflow.coverflow('destroy');
+		const $albums = $('#coverflow .album');
+		const $unfilteredAlbums = $('#coverflow-unfiltered .album');
+
+		if($albums.length && rebuild) $coverflow.coverflow('destroy');
 		$coverflow.empty();
 
+		let unfilteredStartNumber = Math.floor(Math.random() * $unfilteredAlbums.length);
 		let albumNum = 1;
-		$('#coverflow-unfiltered .album').each(function(){
-			const $album = $(this).clone(false);
-			let show = true;
 
-			switch(document.activeFilters.type) {
-				case 'favourites':
-					show = $album.attr('data-filter-favourite') === '1';
-					break;
-				case 'recent':
-					show = $album.attr('data-filter-recent-added') === '1';
-					break;
+		//Cut the deck
+		$unfilteredAlbums.each(function(){
+			if(albumNum >= unfilteredStartNumber) {
+				addUnfilteredAlbumToCoverflow($(this));
 			}
-
-			if(show && document.activeFilters.genre.length && document.activeFilters.genre.indexOf($album.attr('data-filter-genre')) === -1) {
-				show = false;
-			}
-
-			if(show && document.activeFilters.decade.length && document.activeFilters.decade.indexOf($album.attr('data-filter-decade')) === -1) {
-				show = false;
-			}
-
-			if(show && document.activeFilters.artist.length && document.activeFilters.artist.indexOf($album.attr('data-filter-artist-id')) === -1) {
-				show = false;
-			}
-
-			if(show) $album.attr('src', $album.attr('data-src')).attr('data-album-num', albumNum++).appendTo($coverflow);
+			albumNum++;
 		});
+		albumNum = 1;
+		$unfilteredAlbums.each(function(){
+			if(albumNum < unfilteredStartNumber) {
+				addUnfilteredAlbumToCoverflow($(this));
+			}
+			albumNum++;
+		});
+
+		albumNum = 1;
+		$albums.each(function(){
+			$(this).attr('data-album-num', albumNum++);
+		});
+
 		$('#slider .slider-button').attr('max', $coverflow.children().length);
 		$coverflow.trigger('init');
+	}
+
+	function addUnfilteredAlbumToCoverflow($unfilteredAlbum) {
+		const albumsAdded = $('#coverflow .album').length;
+		const $album = $unfilteredAlbum.clone(false);
+		let show = true;
+
+		switch(document.activeFilters.type) {
+			case 'favourites':
+				show = $album.attr('data-filter-favourite') === '1';
+				break;
+			case 'recent':
+				show = $album.attr('data-filter-recent-added') === '1';
+				break;
+		}
+
+		if(show && document.activeFilters.genre.length && document.activeFilters.genre.indexOf($album.attr('data-filter-genre')) === -1) {
+			show = false;
+		}
+
+		if(show && document.activeFilters.decade.length && document.activeFilters.decade.indexOf($album.attr('data-filter-decade')) === -1) {
+			show = false;
+		}
+
+		if(show && document.activeFilters.artist.length && document.activeFilters.artist.indexOf($album.attr('data-filter-artist-id')) === -1) {
+			show = false;
+		}
+
+		if(show) {
+			$album.attr('src', $album.attr('data-src'));
+			if(albumsAdded === 0) {
+				$('#coverflow').append($album);
+			}
+			position = 1; //Math.floor(Math.random() * albumsAdded) + 1;
+			$('#coverflow > .album:nth-child(' + position + ')').after($album);
+		}
 	}
 
 	applyFiltersToCoverflow(false);
@@ -72,7 +109,7 @@ define(["jquery", "coverflow"], function($) {
 		$('#coverflow').coverflow('next');
 	});
 
-	$('.cover-button').on('click', function() {
+	$('.cover-button.left, .cover-button.right').on('click', function() {
 		const $button = $(this);
 
 		$('#actions .cover-button').removeClass('active');
@@ -83,6 +120,24 @@ define(["jquery", "coverflow"], function($) {
 		} else {
 			$('.info-panel-wrapper').addClass('show-back');
 		}
+	});
+
+	async function handleHardReload(url) {
+		await fetch(url, {
+			headers: {
+				Pragma: 'no-cache',
+				Expires: '-1',
+				'Cache-Control': 'no-cache',
+			},
+		});
+		window.location.href = url;
+		// This is to ensure reload with url's having '#'
+		window.location.reload();
+	}
+
+	$('.cover-button.top').on('click', function() {
+		$(this).addClass('active');
+		handleHardReload(window.location.href);
 	});
 
 	$coverflow.on('refresh', function() {

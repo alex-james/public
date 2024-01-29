@@ -120,6 +120,12 @@ body {
     height: 64px;
     width: 148px;
 }
+.cover-button.top {
+    left: 676px;
+    top: 55px;
+    width: 110px;
+    height: inherit;
+}
 .cover-button.left {
     left: 161px;
 }
@@ -360,7 +366,7 @@ body {
 .filter-options::-webkit-scrollbar {
     display: none;
 }
-.filter-options .filter-option {
+.filter-options .filter-option, .filter-options .filter-option-all {
     display: inline-block;
     border: none;
     font-size: 18px;
@@ -373,7 +379,7 @@ body {
     cursor: pointer;
     border-radius: 16px;
 }
-.filter-options .filter-option[data-active="1"] {
+.filter-options .filter-option[data-active="1"], .filter-options .filter-option-all[data-active="1"] {
     background-color: #FFCA32;
     color: #000000;
     order: 0 !important;
