@@ -6,11 +6,11 @@ define(["jquery", "jquery-ui"], function($) {
 	$('.filter-option, .filter-type, .filter-option-all').on('click', function(){
 		const $filterOption = $(this);
 
-		setAllFilterStatus($filterOption);
 		$filterOption.attr('data-active', $filterOption.attr('data-active') === '0' ? '1' : '0');
+		setAllFilterStatus($filterOption);
 		updateActiveFilters()
 		$('#coverflow').trigger('refresh');
-		applyFiltersToFilters();
+		applyFiltersToFilters($filterOption);
 	});
 
 	function setAllFilterStatus($filterOption)
@@ -19,8 +19,9 @@ define(["jquery", "jquery-ui"], function($) {
 		const activeFiltersForGenre = $filterOptions.find('.filter-option[data-active="1"]').length;
 
 		if($filterOption.hasClass('filter-option-all') && activeFiltersForGenre) {
+			$filterOptions.addClass('reset-to-all');
 			$filterOptions.removeClass('has-active-filters');
-			$filterOptions.find('.filter-option').attr('data-active', 0);
+			$filterOptions.find('.filter-option[data-active="1"]').attr('data-active', 0);
 		} else {
 			$filterOptions.addClass('has-active-filters');
 			$filterOptions.find('.filter-option-all').attr('data-active', (activeFiltersForGenre > 0 ? '0' : '1'));
@@ -69,7 +70,7 @@ define(["jquery", "jquery-ui"], function($) {
 	}
 
 	//Filter remaining filters
-	function applyFiltersToFilters()
+	function applyFiltersToFilters($filterOption)
 	{
 		let availableFilters = {
 			genre:[],
@@ -139,24 +140,47 @@ define(["jquery", "jquery-ui"], function($) {
 			}
 		});
 
-		if(!$('#filter-genre .filter-options').hasClass('has-active-filters')) {
-			$('#filter-genre .filter-option').hide();
-			for (i in availableFilters.genre) {
-				$('#filter-genre .filter-option[data-code="' + availableFilters.genre[i] + '"]').show();
+		//No Filters
+		if(document.activeFilters.genre.length === 0 && document.activeFilters.decade.length === 0 && document.activeFilters.artist.length === 0) {
+			$('#filter-tabs .filter-option').show();
+			return;
+		}
+
+		//Apply filters to options on other tabs
+		const $genreOptions = $('#filter-genre .filter-options');
+		if($genreOptions.hasClass('reset-to-all')) {
+			$genreOptions.removeClass('reset-to-all');
+		} else {
+			if(!$genreOptions.hasClass('has-active-filters')) {
+				$('#filter-genre .filter-option').hide();
+				for (i in availableFilters.genre) {
+					$('#filter-genre .filter-option[data-code="' + availableFilters.genre[i] + '"]').show();
+				}
 			}
 		}
 
-		if(!$('#filter-decade .filter-options').hasClass('has-active-filters')) {
-			$('#filter-decade .filter-option').hide();
-			for (i in availableFilters.decade) {
-				$('#filter-decade .filter-option[data-code="' + availableFilters.decade[i] + '"]').show();
+
+		const $decadeOptions = $('#filter-decade .filter-options');
+		if($decadeOptions.hasClass('reset-to-all')) {
+			$decadeOptions.removeClass('reset-to-all');
+		} else {
+			if (!$decadeOptions.hasClass('has-active-filters')) {
+				$('#filter-decade .filter-option').hide();
+				for (i in availableFilters.decade) {
+					$('#filter-decade .filter-option[data-code="' + availableFilters.decade[i] + '"]').show();
+				}
 			}
 		}
 
-		if(!$('#filter-artist .filter-options').hasClass('has-active-filters')) {
-			$('#filter-artist .filter-option').hide();
-			for (i in availableFilters.artist) {
-				$('#filter-artist .filter-option[data-code="' + availableFilters.artist[i] + '"]').show();
+		const $artistsOptions = $('#filter-artist .filter-options');
+		if($artistsOptions.hasClass('reset-to-all')) {
+			$artistsOptions.removeClass('reset-to-all');
+		} else {
+			if (!$artistsOptions.hasClass('has-active-filters')) {
+				$('#filter-artist .filter-option').hide();
+				for (i in availableFilters.artist) {
+					$('#filter-artist .filter-option[data-code="' + availableFilters.artist[i] + '"]').show();
+				}
 			}
 		}
 	}

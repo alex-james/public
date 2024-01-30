@@ -53,14 +53,19 @@ define(["jquery", "coverflow"], function($) {
 			}
 			albumNum++;
 		});
+		$coverflow.trigger('init');
+	}
+
+	function reNumberAlbums()
+	{
+		const $albums = $('#coverflow .album');
 
 		albumNum = 1;
 		$albums.each(function(){
 			$(this).attr('data-album-num', albumNum++);
 		});
 
-		$('#slider .slider-button').attr('max', $coverflow.children().length);
-		$coverflow.trigger('init');
+		$('#slider .slider-button').attr('max', albumNum-1);
 	}
 
 	function addUnfilteredAlbumToCoverflow($unfilteredAlbum) {
@@ -94,13 +99,14 @@ define(["jquery", "coverflow"], function($) {
 			if(albumsAdded === 0) {
 				$('#coverflow').append($album);
 			}
-			position = 1; //Math.floor(Math.random() * albumsAdded) + 1;
+			position = Math.floor(Math.random() * albumsAdded) + 1;
 			$('#coverflow > .album:nth-child(' + position + ')').after($album);
 		}
 	}
 
 	applyFiltersToCoverflow(false);
 	buildCoverFlow();
+	reNumberAlbums();
 
 	$('#coverflow img').on('click',function() {
 		if(!$(this).hasClass('ui-state-active')){
@@ -143,6 +149,7 @@ define(["jquery", "coverflow"], function($) {
 	$coverflow.on('refresh', function() {
 		applyFiltersToCoverflow(true);
 		buildCoverFlow();
+		reNumberAlbums();
 	});
 
 	/* Slider */
