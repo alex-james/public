@@ -253,6 +253,18 @@ body {
     align-items: center;
     font-size: 24px;
 }
+.position {
+    border-collapse: collapse;
+    height: 24px;
+    width: 36px;
+    margin-left: 15px;
+}
+.position .cell {
+    border: 1px solid #eeeeee;
+}
+.position .cell.selected {
+    background-color: #eeeeee;
+}
 #debug {
     position: absolute;
     top: 880px;

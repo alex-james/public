@@ -3,6 +3,7 @@ define(["jquery", "coverflow"], function($) {
 	const $infoBarBottom = $('.info-bar.bottom');
 	const $title = $infoBarTop.find('.title');
 	const $artist = $infoBarBottom.find('.artist');
+	const $position = $infoBarBottom.find('.position');
 	const $genre = $infoBarBottom.find('.genre');
 	const $releaseDate = $infoBarBottom.find('.release-date');
 	const $coverflow = $('#coverflow');
@@ -19,6 +20,8 @@ define(["jquery", "coverflow"], function($) {
 				const releaseDate = new Date($activeAlbum.attr("data-release-date"));
 
 				$artist.text($activeAlbum.attr("data-artist"));
+				$position.find('.cell').removeClass('selected');
+				$position.find(getRackCellSelector($activeAlbum.attr("data-artist"))).addClass('selected');
 				$title.text($activeAlbum.attr("data-title"));
 				$genre.text($activeAlbum.attr("data-genre"));
 				$releaseDate.text(releaseDate.toLocaleDateString('en-GB'));
@@ -26,6 +29,63 @@ define(["jquery", "coverflow"], function($) {
 				$('#slider .slider-button').addClass('updating').val($activeAlbum.attr("data-album-num")).removeClass('updating');
 			}
 		});
+	}
+
+	function getRackCellSelector(artist)
+	{
+		let selector;
+		const artistNoThe = String(artist).toLowerCase().replace(/^(the )/,'');
+		const artistInitial = Array.from(artistNoThe)[0];
+
+		if(!isNaN(Number(artistInitial))) return '.row.top .cell.left';
+		switch(artistInitial) {
+			case 'a':
+			case 'b':
+			case 'c':
+				selector = '.row.top .cell.left';
+				break;
+			case 'd':
+			case 'e':
+				selector = '.row.top .cell.center';
+				break;
+			case 'f':
+			case 'g':
+			case 'h':
+			case 'i':
+				selector = '.row.top .cell.right';
+				break;
+			case 'j':
+			case 'k':
+			case 'l':
+				selector = '.row.middle .cell.left';
+				break;
+			case 'm':
+			case 'n':
+			case 'o':
+				selector = '.row.middle .cell.center';
+				break;
+			case 'p':
+				selector = '.row.middle .cell.right';
+				break;
+			case 'q':
+			case 'r':
+				selector = '.row.bottom .cell.left';
+				break;
+			case 's':
+			case 't':
+				selector = '.row.bottom .cell.center';
+				break;
+			case 'u':
+			case 'v':
+			case 'w':
+			case 'x':
+			case 'y':
+			case 'z':
+			default:
+				selector = '.row.bottom .cell.right';
+		}
+
+		return selector;
 	}
 
 	function applyFiltersToCoverflow(rebuild = false)
