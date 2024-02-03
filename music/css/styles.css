@@ -397,6 +397,62 @@ body {
     order: 0 !important;
 }
 
+/* Track listing */
+.info-panel.back {
+    overflow-y: scroll;
+}
+.info-panel.back .info-panel-header {
+    display: inline-block;
+    margin: 0 0 10px 100px;
+    background-color: #FFCA32;
+    width: calc(100% - 200px);
+    float: left;
+    border-radius: 10px;
+    color: #000;
+}
+#tracks-table {
+    margin: 0 100px 0 100px;
+    color: #eeeeee;
+}
+#tracks-table .track {
+    text-align: left;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+#tracks-table .track .preview-button {
+    border: 2px solid #eeeeee;;
+    border-radius: 100%;
+    padding: 3px 3px 3px 5px;
+    margin-right: 10px;
+    color:#d0700e
+}
+#tracks-table .track .preview-button:before {
+    content: "\f04b";
+}
+#tracks-table .track .preview-button.playing {
+    padding: 3px 4px 3px 4px;
+}
+#tracks-table .track .preview-button.playing:before {
+    content: "\f04d";
+}
+#tracks-table .track.no-preview {
+    cursor: not-allowed;
+}
+#tracks-table .track.no-preview .preview-button {
+    position: relative;
+    left: -4px;
+    border: none;
+    margin-right: 4px;
+    font-size: 20px;
+}
+#tracks-table .track.no-preview .preview-button:before {
+    content: "\f05e";
+}
+#tracks-table .track .track-name {
+    font-size: 18px;
+    font-family: "Mooli", sans-serif;
+}
+
 /* Add */
 #add-album fieldset {
     max-width: 1000px;

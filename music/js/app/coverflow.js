@@ -27,6 +27,7 @@ define(["jquery", "coverflow"], function($) {
 				$releaseDate.text(releaseDate.toLocaleDateString('en-GB'));
 
 				$('#slider .slider-button').addClass('updating').val($activeAlbum.attr("data-album-num")).removeClass('updating');
+				updateTracks();
 			}
 		});
 	}
@@ -119,13 +120,17 @@ define(["jquery", "coverflow"], function($) {
 	function reNumberAlbums()
 	{
 		const $albums = $('#coverflow .album');
+		const $selectedAlbum = $albums.find('.ui-state-active');
 
 		albumNum = 1;
 		$albums.each(function(){
 			$(this).attr('data-album-num', albumNum++);
 		});
+		const sliderPosition = ($selectedAlbum.length === 1)
+			? selectedAlbum.attr('data-album-num')
+			: Math.floor(albumNum / 2);
 
-		$('#slider .slider-button').attr('max', albumNum-1);
+			$('#slider .slider-button').attr('max', albumNum-1).val(sliderPosition);
 	}
 
 	function addUnfilteredAlbumToCoverflow($unfilteredAlbum) {
@@ -184,9 +189,44 @@ define(["jquery", "coverflow"], function($) {
 		if($button.hasClass('left')) {
 			$('.info-panel-wrapper').removeClass('show-back');
 		} else {
+			updateTracks();
 			$('.info-panel-wrapper').addClass('show-back');
 		}
 	});
+
+	function updateTracks() {
+		const $tracksTable = $('#tracks-table');
+		const $activeAlbum = $('#coverflow .album.ui-state-active');
+		let previewClass;
+
+		$tracksTable.empty();
+		if($activeAlbum.length === 1 && window.tracks[$activeAlbum.attr('data-album-id')]) {
+			window.tracks[$activeAlbum.attr('data-album-id')].forEach(function(track){
+				previewClass = (track.preview_url.length > 0) ? '' : ' no-preview';
+				$tracksTable.append('<div class="track'+previewClass+'"><i class="fa-solid preview-button" data-url="'+track.preview_url+'"></i><span class="track-name">'+track.name+'</span></div>');
+			})
+		}
+
+		$('#tracks-table .track .preview-button').off('click').on('click', function() {
+			handlePreviewClick($(this));
+		})
+	}
+
+	function handlePreviewClick($button) {
+		if($button.hasClass('playing')) {
+			$button.removeClass('playing');
+			if(typeof window.playing_track !== 'undefined') window.playing_track.pause();
+		}
+		else {
+			if(typeof window.playing_track !== 'undefined') {
+				window.playing_track.pause();
+			}
+			$button.closest('#tracks-table').find('.preview-button').removeClass('playing');
+			$button.addClass('playing');
+			window.playing_track = new Audio($button.attr('data-url'));
+			window.playing_track.play();
+		}
+	}
 
 	async function handleHardReload(url) {
 		await fetch(url, {
