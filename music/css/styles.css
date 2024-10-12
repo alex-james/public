@@ -21,8 +21,6 @@ body {
     width: 1450px;
     max-width: 1450px;
     height: 905px;
-    max-height: 905px;
-    background-color: #000
 }
 #overlay {
     position: fixed;
@@ -474,6 +472,11 @@ body {
 }
 
 /* Covers */
+#album-covers-table {
+    overflow-y: scroll;
+    display: block;
+    max-height: 800px;
+}
 #album-covers-table .album {
     width: 200px;
 }
